@@ -1,0 +1,112 @@
+package com.bcgi.paymgr.posserver.domestic.ecuador.validator;
+
+import com.bcgi.paymgr.posserver.domestic.common.constant.ResponseCodeConstant;
+import com.bcgi.paymgr.posserver.domestic.common.dto.POSGWAccountRechargeDTO;
+
+
+public class DMASyncRechargeMINValidator {
+
+	public static String isValidReqData(POSGWAccountRechargeDTO posGWAccountRechargeDTO){
+		return isValidData(posGWAccountRechargeDTO);
+	}
+	
+	public static String isValidData(POSGWAccountRechargeDTO posGWAccountRechargeDTO){
+		    String status = "";
+			
+	    	//Subscriber Number
+	    	String subscriberId = "";
+	    	String subscriberId1 = posGWAccountRechargeDTO.getSubscriberId1();
+	    	String subscriberId2 = posGWAccountRechargeDTO.getSubscriberId2();
+	    	String subscriberId3 = posGWAccountRechargeDTO.getSubscriberId3();
+	    	if (subscriberId1 != null){
+	    		subscriberId = subscriberId1;
+	    	}
+	    	else if (subscriberId2 != null){
+	    		subscriberId = subscriberId2;
+	    	}
+	    	else if (subscriberId3 != null){
+	    		subscriberId = subscriberId3;
+	    	}
+	    	status = DMReqMsgDataValidator.isValidSubscriberNumberExists(subscriberId);
+	       	if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+	       	
+//	      Transaction Amount
+	    	String transactionAmount = posGWAccountRechargeDTO.getTransactionAmount();
+	    	status = DMReqMsgDataValidator.isValidTransactionAmount(transactionAmount);
+			if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+	    		    	    	
+			//System Trace Audit Number
+			String systemTraceAuditNum = posGWAccountRechargeDTO.getSystemTraceAuditNumber();
+	    	status = DMReqMsgDataValidator.isValidSystemTraceAuditNumber(systemTraceAuditNum);
+			if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+			
+			//Transaction Time
+			String transactionTime = posGWAccountRechargeDTO.getTransactionTime();
+			//Modified on 20Feb08 for making Mandatory field
+				status = DMReqMsgDataValidator.isValidTime(transactionTime);
+				if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+					return status;
+				}
+			
+			//Transaction Date
+			String transactionDate = posGWAccountRechargeDTO.getTransactionDate();
+			//Modified on 20Feb08 for making Mandatory field
+				status = DMReqMsgDataValidator.isValidDate(transactionDate);
+				if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+					return status;
+				}
+		    
+			//Distributor Id
+	    	String distributorId = posGWAccountRechargeDTO.getDistributorId();
+	    	status = DMReqMsgDataValidator.isValidDistributorId(distributorId);
+			if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+			
+			//SalesPerson Id
+	    	String salesPersonId = posGWAccountRechargeDTO.getStoreId();
+	    	status = DMReqMsgDataValidator.isValidSalesPersonId(salesPersonId);
+	    	if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+	    	
+	    	//subdistributor Id 
+	    	//Below subDistributor Id validation is added for Defects: #17078 and #17080
+	    	String subDistributorId = posGWAccountRechargeDTO.getSubAgentId();
+	    	if (subDistributorId != null && subDistributorId.trim().length() > 0){
+	    	status = DMReqMsgDataValidator.isValidSubDistributorId(subDistributorId);
+	    	if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+	    	}  
+	    	
+	    	
+	    	//Validation Id
+			String validationId = posGWAccountRechargeDTO.getValidationId();
+	    	status = DMReqMsgDataValidator.isValidValidationID(validationId);
+			if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+				return status;
+			}
+			
+			if(posGWAccountRechargeDTO.getMessageDTO()!=null && posGWAccountRechargeDTO.getMessageDTO().getOriginCurrencyCode()!=null)
+			{
+				String originCurrecyCode = posGWAccountRechargeDTO.getMessageDTO().getOriginCurrencyCode();
+				status = DMReqMsgDataValidator.isValidCurrencyCode(originCurrecyCode);
+				if (!status.equals(ResponseCodeConstant.INTERNAL_SUCCESS_STATUS)){
+					return status;
+				}
+			}
+
+			return ResponseCodeConstant.INTERNAL_SUCCESS_STATUS;
+	}
+
+	
+
+
+}

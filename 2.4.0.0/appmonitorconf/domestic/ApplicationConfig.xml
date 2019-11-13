@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="VersionFormat" class="java.lang.String" >
+	<!-- Version 0000 means undefined -->
+		<constructor-arg type="java.lang.String"><value>0000</value></constructor-arg>
+	</bean>
+	<bean id="PersistingBeanMap" class="java.util.HashMap" >
+		<constructor-arg>
+			<map>
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigEventsBean">
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:Settings=Event Log Settings,Module=Default">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigEventBean">
+						<property name="groupEventsBy" value="%ModuleId"/>
+						<property name="eventCurrentPegCountInterval" value="5 minutes"/>
+						<property name="eventLogFileSeparator" value=":"/>
+						<property name="eventAnalyzeInterval" value="1 minutes"/>
+						<property name="eventDefaultSeverity" value="INFO"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="eventLogFileName" value="log/ETL/%AppId-%MachineId.txt"/>
+						<property name="eventLayout" value="net.bcgi.common.jmon.monitor.ETLFileLegacyLayout"/>
+						<property name="eventLogFileInterval" value="2 hours"/>
+						<property name="eventLogFileWriteTime" value="3"/>
+						<property name="enable" value="true"/>
+						<property name="additivity" value="false"/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:Settings=Log Settings,Module=Default">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigLogBean">
+						<property name="creditCardTransactionTimeLimit" value="-1"/>
+						<property name="logFileInterval" value="2 hours"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="logFileMaxSize" value="10485760"/>
+						<property name="flushLineCount" value="0"/>
+						<property name="alarmLevel" value="ERROR"/>
+						<property name="logFileName" value="log/%AppId-%MachineId.txt"/>
+						<property name="enable" value="true"/>
+						<property name="additivity" value="false"/>
+						<property name="loggingLevel" value="DEBUG"/>
+					</bean>
+				</entry>			
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events,Module=Default,Event=GeneralAlarm">
+					<bean class="net.bcgi.common.jmon.eventconfig.BCGEvent">
+						<property name="text" value=""/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="severity" value="DEBUG"/>
+						<property name="eventAction" value="AlarmAlways"/>
+						<property name="alarmData" value="5.2.2.13.0"/>
+						<property name="alarmUsingSNMP" value="true"/>
+						<property name="eventName" value="GeneralAlarm"/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events,Module=Default,Event=LimitExceeded">
+					<bean class="net.bcgi.common.jmon.eventconfig.BCGEvent">
+						<property name="text" value="Limit exceeded"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="severity" value="ERROR"/>
+						<property name="eventAction" value="AlarmAlways"/>
+						<property name="alarmData" value="5.2.2.13.0"/>
+						<property name="alarmUsingSNMP" value="true"/>
+						<property name="eventName" value="LimitExceeded"/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events,Module=Default,Event=TransactionTimeLimitExceeded">
+					<bean class="net.bcgi.common.jmon.eventconfig.BCGEvent">
+						<property name="text" value=""/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="severity" value="WARN"/>
+						<property name="eventAction" value="AlarmAlways"/>
+						<property name="alarmData" value="5.2.2.13.0"/>
+						<property name="alarmUsingSNMP" value="true"/>
+						<property name="eventName" value="TransactionTimeLimitExceeded"/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events,Module=Default,Event=LimitNotExceeded">
+					<bean class="net.bcgi.common.jmon.eventconfig.BCGEvent">
+						<property name="text" value="Didn't reach limit"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="severity" value="ERROR"/>
+						<property name="eventAction" value="AlarmAlways"/>
+						<property name="alarmData" value="5.2.2.13.0"/>
+						<property name="alarmUsingSNMP" value="true"/>
+						<property name="eventName" value="LimitNotExceeded"/>
+					</bean>
+				</entry>								
+				<entry key="AppMonitor Settings:Settings=SNMP Settings">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigSNMPBean">
+						<property name="trapOIDTemplate" value="%appOID.2.2.n2.0"/>
+						<property name="appOID" value="5"/>
+						<property name="appNameTemplate" value="1.3.6.1.4.1.3975.%appOID.2.1.6.0"/>
+						<property name="appName" value="Embarq"/>
+						<property name="communityString" value="PaymentManager"/>
+						<property name="alarmDescrTemplate" value="1.3.6.1.4.1.3975.%appOID.2.1.4.0"/>
+						<property name="componentNameTemplate" value=""/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:Settings=Alarm Settings,Module=Default">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigAlarmBean">
+						<property name="alarmLocalSendPort" value="161"/>
+						<property name="alarmHostListenPort" value="162"/>
+						<property name="alarmHostIPAddress" value="10.130.7.126"/>
+						<property name="alarmLocalIPAddress" value="10.130.7.138"/>
+						<property name="enable" value="true"/>
+					</bean>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>

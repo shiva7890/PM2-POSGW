@@ -1,0 +1,267 @@
+<?xml version="1.0" ?>
+<!DOCTYPE mbeans-descriptors PUBLIC
+ "-//Apache Software Foundation//DTD Model MBeans Configuration File"
+ "http://jakarta.apache.org/commons/dtds/mbeans-descriptors.dtd">
+<mbeans-descriptors>
+   <mbean name="net.bcgi.common.appconfig.xmlconfigmgr.httpConnectionSettings" description="Settings for http connection" type="net.bcgi.common.appconfig.xmlconfigmgr.httpConnectionSettings">
+
+      <attribute name="httpPort" description="Listen port for this HTTP connection" displayName="HTTP connection listen port" type="java.lang.Integer" />
+
+      <attribute name="httpHost" description="HTTP connection host (e.g. 0.0.0.0)" displayName="HTTP connection host" type="java.lang.String" />
+
+      <attribute name="httpAuthenticationMethod" description="Authentication method for HTTP connection (none/basic/digest)" displayName="HTTP connection authentication method" type="java.lang.String" />
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.eventconfig.BCGEvent" description="Managed BCGEvent class" type="net.bcgi.common.jmon.eventconfig.BCGEvent">
+      <attribute name="eventName" description="The name assigned to this event" displayName="Name" type="java.lang.String" writeable="false" />
+
+      <attribute name="eventAction" description="Condition to generate alarm: AlarmAlways, NoAlarm, AlarmIfExceeded, AlarmIfNotExceeded" displayName="EventAction" type="java.lang.String" />
+
+      <attribute name="alarmUsingSNMP" description="Send SNMP alarm" displayName="alarmUsingSNMP" type="boolean" is="true" />
+
+      <attribute name="severity" description="Event severity (logging level)" displayName="Severity" type="java.lang.String" />
+
+      <attribute name="alarmData" description="SNMP trap OID value" displayName="AlarmData" type="java.lang.String" />
+
+      <attribute name="text" description="A default text assigned to an event" displayName="Text" type="java.lang.String" />
+
+      <attribute name="transactionTimeLimit" description="Transaction time limit in milliseconds" displayName="transactionTimeLimit" type="long" />
+
+      <constructor displayName="BCGEvent" name="BCGEvent">
+         <parameter name="sName" description="Event name" type="java.lang.String" />
+      </constructor>
+
+      <operation name="addLimit" description="Adds event's limit" impact="ACTION" returnType="void">
+         <parameter name="limit time:" description="Start of time period" type="java.lang.String" />
+
+         <parameter name="peg count:" description="Peg count limit" type="int" />
+
+         <parameter name="minutes:" description="Time period in minutes" type="int" />
+      </operation>
+
+      <operation name="removeLimit" description="Removes event's limit" impact="ACTION" returnType="void">
+         <parameter name="limit time:" description="Start of time period" type="java.lang.String" />
+      </operation>
+
+      <operation name="removeEvent" description="Removes this event" impact="ACTION" returnType="void" />
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.eventconfig.BCGEventLimit" description="Managed BCGEventLimit class" type="net.bcgi.common.jmon.eventconfig.BCGEventLimit">
+      <attribute name="limitTime" description="Start of time period" displayName="LimitTime" type="java.lang.String" />
+
+      <attribute name="pegLimit" description="Peg count limit" displayName="PegLimit" type="int" />
+
+      <attribute name="minutes" description="time period in minutes" displayName="Minutes" type="int" />
+
+      <constructor displayName="BCGEventLimit" name="BCGEventLimit">
+         <parameter name="sLimitTime" description="Start of time period" type="java.lang.String" />
+      </constructor>
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigLogBean" description="Managed BCGConfigLogBean" type="net.bcgi.common.jmon.monitor.BCGLogConfigBean">
+      <attribute name="loggingLevel" description="Logging Level" displayName="Logging Level" type="java.lang.String" />
+
+      <attribute name="alarmLevel" description="Alarm Level" displayName="AlarmLevel" type="java.lang.String" />
+
+      <attribute name="logFileInterval" description="Log File Archive Interval" displayName="LogFileInterval" type="java.lang.String" />
+
+      <attribute name="logFileMaxSize" description="Log File Max Size" displayName="LogFileMaxSize" type="long" />
+
+      <attribute name="logFileName" description="Log File Name" displayName="LogFileName" type="java.lang.String" />
+
+      <attribute name="additivity" description="Additivity flag" displayName="Additivity" type="boolean" writeable="false" />
+
+      <attribute name="enable" description="Enable/Disable flag" displayName="isEnable" type="boolean" writeable="false" is="true" />
+
+      <attribute name="transactionTimeLimit" description="Transaction time limit in milliseconds" displayName="transactionTimeLimit" type="long" />
+
+      <attribute name="creditCardTransactionTimeLimit" description="Transaction time limit in milliseconds" displayName="transactionTimeLimit" type="long" />
+
+	  <attribute name="flushLineCount" description="How many lines in buffer before flush" displayName="FlushLineCount" type="int" />
+	  
+	  <!-- attribute name="logFileMaxRecords" description="Log File Max Records" displayName="logFileMaxRecords" type="long" /-->
+	  
+	  <attribute name="logFileRolloverFrom" description="Start of rollover" displayName="logFileRolloverFrom" type="java.lang.String" />
+	  
+      <operation name="addFilterRule" description="Adds filter rule" impact="ACTION" returnType="void">
+         <parameter name="ruleName:" description="name (has to be unique within module)" type="java.lang.String" />
+
+         <parameter name="index:" description="index" type="int" />
+
+         <parameter name="paramToMatch:" description="parameter name (CarrierCode, Text, tag names)" type="java.lang.String" />
+
+         <parameter name="regularExpression:" description="pattern to match" type="java.lang.String" />
+
+         <parameter name="combineOperation:" description="AND/OR" type="java.lang.String" />
+      </operation>
+
+      <operation name="removeFilterRule" description="Removes filter rule" impact="ACTION" returnType="void">
+         <parameter name="ruleName:" description="name" type="java.lang.String" />
+      </operation>
+
+      <operation name="archiveLog" impact="ACTION" returnType="void" />
+  
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigRefLogBean" description="Managed BCGConfigRefLogBean" type="net.bcgi.common.jmon.monitor.BCGConfigRefLogBean">
+      <attribute name="loggingLevel" description="Logging Level" displayName="Logging Level" type="java.lang.String" />
+
+      <attribute name="persist" description="Persistence flag" displayName="isPersist" type="boolean" writeable="false" is="true" />
+
+      <operation name="changeSettingBase" impact="ACTION" returnType="void">
+         <parameter name="Name:" type="java.lang.String" />
+      </operation>
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigRefEventBean" description="Managed BCGConfigRefEventBean" type="net.bcgi.common.jmon.monitor.BCGConfigRefEventBean">
+      <attribute name="persist" description="Persistence flag" displayName="isPersist" type="boolean" is="true" writeable="false" />
+
+      <operation name="changeSettingBase" impact="ACTION" returnType="void">
+         <parameter name="Name:" type="java.lang.String" />
+      </operation>
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigRefAlarmBean" description="Managed BCGConfigRefAlarmBean" type="net.bcgi.common.jmon.monitor.BCGConfigRefAlarmBean">
+      <attribute name="persist" description="Persistence flag" displayName="isPersist" type="boolean" is="true" writeable="false" />
+
+      <operation name="changeSettingBase" impact="ACTION" returnType="void">
+         <parameter name="Name:" type="java.lang.String" />
+      </operation>
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigEventBean" description="Managed BCGConfigEventBean" type="net.bcgi.common.jmon.monitor.BCGConfigEventBean">
+      <attribute name="eventLogFileName" description="eventLogFileName" displayName="EventLogFileName" type="java.lang.String" />
+
+      <attribute name="eventLogFileSeparator" description="eventLogFileSeparator" displayName="EventLogFileSeparator" type="java.lang.String" />
+		<!-- for TAB	
+			<property name="eventLogFileSeparator" value="&#x9;"/>
+		-->
+      <attribute name="eventLogFileInterval" description="Event Log File Interval" displayName="Event Log File Interval" type="java.lang.String" />
+
+      <attribute name="eventLogFileWriteTime" description="Event Log File Write Time" displayName="Event Log File Interval" type="int" />
+
+      <attribute name="eventCurrentPegCountInterval" description="eventCurrentPegCountInterval" displayName="Event Current PegCount Interval" type="java.lang.String" />
+
+      <attribute name="eventAnalyzeInterval" description="eventAnalyzeInterval" displayName="Event Analyze Interval" type="java.lang.String" />
+
+      <attribute name="eventLayout" description="name of layout class" displayName="Event layout class" type="java.lang.String" writeable="false"/>
+
+      <attribute name="additivity" description="Additivity flag" displayName="Additivity" type="boolean" writeable="false" />
+
+      <attribute name="enable" description="Enable/Disable flag" displayName="enable" type="boolean" writeable="false" is="true" />
+
+      <attribute name="transactionTimeLimit" description="Transaction time limit in milliseconds" displayName="Transaction Time Limit" type="long" />
+
+	  <attribute name="groupEventsBy" description="group events in file" displayName="Group Events By" type="java.lang.String" />
+      
+      <attribute name="eventDefaultSeverity" description="A default severity for dynamic events" displayName="Default Event Severity" type="java.lang.String" />
+      
+      <operation name="writeETLFile" impact="ACTION" returnType="void" />
+      
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigAlarmBean" description="Managed BCGConfigAlarmBean" type="net.bcgi.common.jmon.monitor.BCGConfigAlarmBean">
+      <attribute name="alarmLocalIPAddress" description="alarm Local IPAddress" displayName="Alarm Local IPAddress" type="java.lang.String" />
+
+      <attribute name="alarmLocalSendPort" description="alarm Local SendPort" displayName="Alarm Local Send Port" type="int" />
+
+      <attribute name="alarmHostIPAddress" description="alarm Host IPAddress" displayName="Alarm Host IPAddress" type="java.lang.String" />
+
+      <attribute name="alarmHostListenPort" description="alarm Host ListenPort" displayName="Alarm Host Listen Port" type="int" />
+
+      <attribute name="enable" description="Enable/Disable flag" displayName="enable" type="boolean" writeable="false" is="true" />
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.logfilter.FilterRule" description="Filter rule description" type="net.bcgi.common.jmon.logfilter.FilterRule">
+      <attribute name="index" description="Rule name" displayName="Index" type="int" writeable="false" />
+
+      <attribute name="paramToMatch" description="Parameter name" displayName="ParamToMatch" type="java.lang.String" />
+
+      <attribute name="regularExpression" description="Regular Expression" displayName="RegularExpression" type="java.lang.String" />
+
+      <attribute name="combineOperation" description="Combine rules operation (AND/OR)" displayName="CombineOperation" type="java.lang.String" />
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigSNMPBean" description="Managed BCGConfigSNMPBean" type="net.bcgi.common.jmon.monitor.BCGConfigSNMPBean">
+      <attribute name="trapOIDTemplate" description="Trap OID Template" displayName="TrapOIDTemplate" type="java.lang.String" writeable="false" />
+
+      <attribute name="alarmDescrTemplate" description="Alarm Description Template" displayName="AlarmDescriptionTemplate" type="java.lang.String" writeable="false" />
+
+      <attribute name="appNameTemplate" description="Application Name Template" displayName="ApplicationNameTemplate" type="java.lang.String" writeable="false" />
+
+      <attribute name="communityString" description="Community Name" displayName="CommunityString" type="java.lang.String" writeable="false" />
+
+      <attribute name="appName" description="Application Name" displayName="ApplicationName" type="java.lang.String" writeable="false" />
+
+      <attribute name="appOID" description="Application OID" displayName="ApplicationOID" type="int" writeable="false" />
+      
+      <attribute name="componentNameTemplate" description="Component Name Description Template" displayName="ComponentNameDescriptionTemplate" type="java.lang.String" writeable="false" />
+
+   </mbean>
+
+   <mbean name="net.bcgi.common.jmon.monitor.BCGConfigEventsBean" description="Managed BCGConfigEventsBean" type="net.bcgi.common.jmon.monitor.BCGConfigEventsBean">
+      <operation name="addEvent" impact="ACTION" returnType="void">
+         <parameter name="name" type="java.lang.String" />
+
+         <parameter name="moduleName" type="java.lang.String" />
+      </operation>
+
+      <operation name="removeEvent" impact="ACTION" returnType="void">
+         <parameter name="name" type="java.lang.String" />
+
+         <parameter name="moduleName" type="java.lang.String" />
+      </operation>
+   </mbean>
+   
+   <mbean name="net.bcgi.common.jmon.transaction.BCGConfigTransBean" description="Managed BCGConfigTransBean" type="net.bcgi.common.jmon.transaction.BCGConfigTransBean">
+		<attribute name="threshold" description="Transaction threshold" displayName="threshold" type="java.lang.String" />
+		<attribute name="transactionBufferSize" description="Transactions buffer size" displayName="transactionBufferSize" type="int" />
+		<!-- attribute name="additivity" description="Additivity flag" displayName="Additivity" type="boolean" writeable="false" />
+      	<attribute name="enable" description="Enable/Disable flag" displayName="isEnable" type="boolean" writeable="false" is="true" /-->
+   </mbean>
+   <mbean name="net.bcgi.common.jmon.transaction.BCGConfigTransFileBean" description="Managed BCGConfigTransFileBean" type="net.bcgi.common.jmon.transaction.BCGConfigTransFileBean">
+      <attribute name="fileInterval" description="File Archive Interval" displayName="FileInterval" type="java.lang.String" />
+      <attribute name="fileMaxSize" description="File Max Size" displayName="FileMaxSize" type="long" />
+      <attribute name="fileLocation" description="File Location" displayName="FilePath" type="java.lang.String" />
+      <attribute name="enable" description="Enable/Disable flag" displayName="isEnable" type="boolean" is="true" />
+      <attribute name="fileMaxRecords" description="File Max Records" displayName="fileMaxRecords" type="long" />
+	  <attribute name="idKey" description="File name key" displayName="FileNameKey" type="java.lang.String" writeable="false"/>
+	  <attribute name="defaultIdValue" description="Default file name key" displayName="DefaultFileNameKey" type="java.lang.String" writeable="false"/>
+	  <attribute name="idValues" description="File name ids" displayName="FileNameIDs" type="java.util.ArrayList" writeable="false"/>
+	  <attribute name="fileRolloverFrom" description="Start of rollover" displayName="FileRolloverFrom" type="java.lang.String" />
+	  <operation name="archiveLog" impact="ACTION" returnType="void" />
+   </mbean>
+   <mbean name="net.bcgi.common.jmon.transaction.BCGConfigTransDBBean" description="Managed BCGConfigTransDBBean" type="net.bcgi.common.jmon.transaction.BCGConfigTransDBBean">
+      <attribute name="enable" description="Enable/Disable flag" displayName="isEnable" type="boolean" is="true" />
+      <attribute name="hibernateConfigFile" description="Hibernate configuration file" displayName="hibernateConfigFile" type="java.lang.String" />
+      <attribute name="passwordEncrypted" description="Encryption flag" displayName="isPasswordEncrypted" type="boolean" is="true" />
+      <attribute name="hibernateMappingFiles" description="Hibernate mapping files" displayName="hibernateMappingFiles" type="java.util.ArrayList" />
+
+      <operation name="addHibernateMappingFile" impact="ACTION" returnType="void">
+          <parameter name="fileName" type="java.lang.String" />
+      </operation>
+
+      <operation name="removeHibernateMappingFile" impact="ACTION" returnType="void">
+         <parameter name="fileName" type="java.lang.String" />
+      </operation>
+      
+      <operation name="reconnectToDatabase" impact="ACTION" returnType="void">
+      </operation>
+      
+      <notification name="INVOKE_OPERATION">
+      	<notification-type>addHibernateMappingFile</notification-type>
+      	<notification-type>removeHibernateMappingFile</notification-type>
+      	<notification-type>reconnectToDatabase</notification-type>
+      </notification>
+
+   </mbean>
+</mbeans-descriptors>
+

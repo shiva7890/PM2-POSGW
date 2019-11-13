@@ -1,0 +1,60 @@
+--------------------------------------
+POS Gateway Build Process in Devlinux
+---------------------------------------
+
+
+
+Step 1: Login to Dev Linux(10.144.28.187)
+        User Name: jboss
+        Pwd : XXXXXX
+          [OR]
+        
+        Login to Hamster Linux box(192.168.149.47)
+        User Name: telefonica
+        Pwd: telefonica
+          
+
+               
+
+Step 3: Set the perforce login
+  	export P4USER=<user name of perforce>
+  	 
+  	 
+  	 Example: P4USER=hello
+  	
+Step 4: Login to Perforce
+        p4 login 
+        
+Step 5: Sync the code
+           p4 sync -f //depot/xb/Payment/2.0/POS-GW/Releases/2.0.10.0/...
+
+Step 6: Go to source location
+        cd /home/jboss/depot/Bell-South/xb/Payment/2.0/POS-GW/Releases/2.0.10.0[devlinux]
+           [OR]
+        cd /home/telefonica/xb/Payment/2.0/POS-GW/Releases/2.0.10.0   [Hamster]
+
+Step 7:  set envronment variables in build.sh(by default)
+          set JDK PATH,ANT PATH,SRC FOLDER PATH
+
+Step 8:  Run build [this for compile,creation of jar and pos gw binaries in dist folder]
+          sh  build.sh
+
+Step 9: Find dist folder and POSGateway folder in dist folder  after completion build process        
+
+
+Step 10: zip the POSGateway folder in the newly created dist folder
+
+         zip -r pm_pos_gateway_config_files_2.0.10.0.zip POSGateway
+         
+Step 11: copy the biaries to stagin location
+
+login to staging machine
+
+scp telefonica@192.168.149.47:/home/telefonica/xb/Payment/2.0/POS-GW/Releases/2.0.10.0/dist/pm_pos_gateway_config_files_2.0.10.0.zip .
+
+         
+         
+         
+
+
+

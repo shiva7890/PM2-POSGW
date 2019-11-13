@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="lib/appconfig.jar" kind="lib"/>
+	<classpathentry path="lib/appmonitor.jar" kind="lib"/>
+	<classpathentry path="lib/apputil_14.jar" kind="lib"/>
+	<classpathentry path="lib/commons-logging.jar" kind="lib"/>
+	<classpathentry path="lib/commons-modeler.jar" kind="lib"/>
+	<classpathentry path="lib/dom4j.jar" kind="lib"/>
+	<classpathentry path="lib/jbossall-client.jar" kind="lib"/>
+	<classpathentry path="lib/jce1_2_2.jar" kind="lib"/>
+	<classpathentry path="lib/jdbm-1.0.jar" kind="lib"/>
+	<classpathentry path="lib/jdom-1.0.jar" kind="lib"/>
+	<classpathentry path="lib/jmxremote_optional.jar" kind="lib"/>
+	<classpathentry path="lib/jmxremote.jar" kind="lib"/>
+	<classpathentry path="lib/jmxri.jar" kind="lib"/>
+	<classpathentry path="lib/jmxtools.jar" kind="lib"/>
+	<classpathentry path="lib/joesnmp.jar" kind="lib"/>
+	<classpathentry path="lib/jpos_1.6.4.jar" kind="lib"/>
+	<classpathentry path="lib/mx4j.jar" kind="lib"/>
+	<classpathentry path="lib/mx4j-tools.jar" kind="lib"/>
+	<classpathentry path="lib/posdtos.jar" kind="lib"/>
+	<classpathentry path="lib/posejbproxys.jar" kind="lib"/>
+	<classpathentry path="lib/RRResources.jar" kind="lib"/>
+	<classpathentry path="lib/snmpTrapAppender_1_2_9.jar" kind="lib"/>
+	<classpathentry path="lib/spring.jar" kind="lib"/>
+	<classpathentry path="lib/log4j-1.2.15.jar" kind="lib"/>
+	<classpathentry path="lib/domesticservices_2.0.2.0.jar" kind="lib"/>
+	<classpathentry path="classes" kind="output"/>
+</classpath>

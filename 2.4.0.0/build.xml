@@ -1,0 +1,100 @@
+<project name="Domestic-POS-Gateway" default="dist" basedir=".">
+
+  <description>
+        POS POSGateway build file
+  </description>
+  
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="classes" location="classes"/>
+  <property name="maindist"  location="dist"/>
+  <property name="dist"  location="${maindist}/POSGateway"/>
+  <property name="lib"  location="lib"/>
+  <property name="configfile"  location="configfile"/>
+  <property name="appmonitorconf"  location="appmonitorconf"/>
+  <property name="log"  location="log"/>
+  <property name="bin"  location="bin"/>
+  <property name="distlib"  location="${dist}/lib"/>
+  <property name="distbin"  location="${dist}/bin"/>
+  <property name="distconfigfile"  location="${dist}/configfile"/>
+  <property name="distappmonitorconf"  location="${dist}/appmonitorconf"/>
+  <property name="distlogs"  location="${dist}/log"/>
+  <property name="deprecation" value="true" />
+  <property name="debug" value="on" />
+  <property name="mani" value="custommanifest/MANIFEST.MF" />
+  <property name="mainclass" value="com.bcgi.paymgr.posserver.Bootstrap" />
+  <property name="pmposserverjar" value="pmposserver.jar" />
+  <property name="pmposserverlib" value="lib/jdom.jar lib/jpos_1.6.4.jar lib/xercesImpl-2.6.2.jar lib/xalan_2_0_0.jar  lib/mx4j-jmx.jar lib/mx4j-tools.jar lib/mx4j-impl.jar lib/jboss-common-client.jar lib/RRResources_1.1.13.0.jar lib/xius_logger1.0.0.0.jar  lib/concurrent.jar lib/jboss-client.jar lib/jboss-common-core.jar lib/jboss-integration.jar lib/jboss-javaee.jar lib/jboss-logging-spi.jar lib/jboss-remoting.jar lib/jboss-security-spi.jar lib/jboss-serialization.jar lib/jbossall-client.jar lib/jbosssx-client.jar lib/jnp-client.jar lib/policy.jar" />
+ 
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${classes}"/>
+  </target>
+  
+  <path id="pmposserver.classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${classes}"/>
+        <pathelement path="${classpath}"/>
+ </path>
+
+
+  <target name="compile" depends="init" description="compile the source " >
+    <!-- Compile the java code from ${src} into ${classes} -->
+    <!-- <javac srcdir="${src}" destdir="${classes}"/> -->
+    <javac srcdir="${src}" destdir="${classes}"
+            debug="${debug}"
+            deprecation="${deprecation}" >
+            <classpath refid="pmposserver.classpath" />
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile" description="generate the distribution" >
+    <mkdir dir="${maindist}"/>
+    <mkdir dir="${dist}"/>
+    <mkdir dir="${distlib}"/>
+    <copy todir="${distlib}">
+        <fileset dir="${lib}">
+         <include name="*.jar"/>
+        </fileset>
+    </copy>
+    <mkdir dir="${distconfigfile}"/>
+    <copy todir="${distconfigfile}">
+        <fileset dir="${configfile}">
+          <include name="*.*"/>
+        </fileset>
+    </copy>
+  	<mkdir dir="${distappmonitorconf}"/>
+  	    <copy todir="${distappmonitorconf}">
+  	        <fileset dir="${appmonitorconf}">
+  	          <include name="**/*.*"/>
+  	        </fileset>
+  	    </copy>
+    <mkdir dir="${distbin}"/>
+    <copy todir="${dist}">
+        <fileset dir="${bin}">
+           <include name="*.*"/>
+        </fileset>
+    </copy>
+    <mkdir dir="${distlogs}"/>
+    <!-- Put everything in ${classes} into the posclientsim.jar file -->
+    <jar jarfile="${dist}/${pmposserverjar}"  basedir="${classes}">
+    <manifest>
+         <attribute name="Main-Class" value="${mainclass}"/>
+         <attribute name="Class-Path" value="${pmposserverlib}"/>
+    </manifest>
+    </jar>
+  </target>
+
+  <target name="clean"  description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${classes}"/>
+    <delete dir="${maindist}"/>
+  </target>
+  
+</project>
+

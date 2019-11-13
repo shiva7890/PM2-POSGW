@@ -1,0 +1,70 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="false" threshold="all">
+	<renderer renderedClass="net.bcgi.common.jmon.monitor.BCGMessageObject" renderingClass="net.bcgi.common.jmon.monitor.BCGMessageObjectWithTagsRenderer" />
+	<!-- renderer renderedClass="net.bcgi.common.jmon.monitor.BCGMessageObject" renderingClass="net.bcgi.common.jmon.monitor.BCGMessageObjectRenderer" /-->
+	<renderer renderedClass="net.bcgi.common.jmon.monitor.BCGAlarmMessageObject" renderingClass="net.bcgi.common.jmon.monitor.BCGSNMPAlarmMessageRenderer" />
+	<renderer renderedClass="net.bcgi.common.jmon.monitor.BCGEventMessageObject" renderingClass="net.bcgi.common.jmon.monitor.BCGEventMessageObjectRenderer" />
+	<!-- renderer renderedClass="net.bcgi.common.jmon.monitor.BCGEventMessageObject" renderingClass="net.bcgi.common.jmon.monitor.BCGEventMessageObjectWithTagsRenderer" /-->
+	
+	<!-- This is sync file appender. Could be append to async appender -->
+	<appender name="bcgLogAppender" class="net.bcgi.common.jmon.monitor.BCGRollingFileAppender">
+		<!--default file size 1MB (10485760 bytes)-->
+		<param name="File" value="appmonitor_log.txt" />
+		<layout class="net.bcgi.common.jmon.monitor.BCGLogMessageLayout">
+			<param name="ConversionPattern" value="%S:%T:%P:%D:%c: %m%n" />
+			<param name="TimeZone" value="GMT" />
+		</layout>
+		<filter class="net.bcgi.common.jmon.monitor.BCGFilter">
+			<!-- This filter will do nothing without rules -->
+			<!-- Rules has to be defined in applicationConfig.xml -->
+		</filter>
+	</appender> 
+	<!-- This is async file appender. bcgLogAppender has to be appended to do actual work"-->
+	<appender name="bcgAsyncLogAppender" class="net.bcgi.common.jmon.monitor.BCGRollingFileAsyncAppender">
+		<appender-ref ref="bcgLogAppender"/>
+	</appender> 
+	
+	<!--event appender. -->
+	<!-- Now event appender is required in order to send alarm. It will change later. -->
+	<appender name="bcgEventAppender" class="net.bcgi.common.jmon.monitor.BCGEventAppender">
+			<param name="EventLogFileName" value="appmonitor_events.txt" />
+			<!-- currentPegCount interval in millisecond -->
+			<param name="EventCurrentPegCountInterval" value="300000" />
+			<!-- write etl file interval in millisecond -->
+			<param name="EventLogFileInterval" value="5" />
+			<param name="EventLogFileWriteTime" value="1" />
+			<!-- etl file format: ETLFileLayout will write ETL files in AppMonitor introduced format-->
+			<!-- etl file format: ETLFileLegacyLayout will write ETL files in LogConsole format-->	
+			<layout class="net.bcgi.common.jmon.monitor.ETLFileLegacyLayout" />
+		</appender>
+
+	<!-- alarm appender. 
+	<appender name="bcgAlarmAppender" class="net.bcgi.common.jmon.monitor.BCGSNMPAlarmAppender">
+	<param name="ImplementationClassName" value="net.bcgi.common.jmon.monitor.BCGSNMPTrapSender" />
+		<param name="ManagementHost" value="10.130.7.126" />
+		<param name="ManagementHostTrapListenPort" value="162" />
+		<param name="EnterpriseOID" value="1.3.6.1.4.1.3975" />
+		<param name="LocalIPAddress" value="10.130.7.138" />
+		<param name="LocalTrapSendPort" value="161" />
+		<param name="GenericTrapType" value="6" />
+		<param name="SpecificTrapType" value="52223" />
+		<param name="ApplicationTrapOID" value="1.3.6.1.4.1.3975" />
+		<param name="CommunityString" value="public" />
+		<param name="ForwardStackTraceWithTrap" value="true" />
+		<layout class="net.bcgi.common.jmon.monitor.BCGSNMPAlarmPatternLayout">
+			<param name="ValuePairDelim" value="/" />
+			<param name="VarDelim" value=";" />
+			<param name="ConversionPattern" value="%m;1.3.6.1.4.1.3975.5.2.1.4.0/%C{1};1.3.6.1.4.1.3975.5.2.1.6.0" />
+		</layout>
+	</appender>
+	-->
+	<category class="net.bcgi.common.jmon.monitor.BCGLogger" name="BCGDefaultLogger" additivity="true">
+		<param name="DefaultLogger" value="true" />
+		<priority value="fine#net.bcgi.common.jmon.monitor.BCGLevel" />
+		<!-- replace bcgLogAppender by bcgAsyncLogAppender for async file appender -->
+		<appender-ref ref="bcgAsyncLogAppender"/>
+		<appender-ref ref="bcgEventAppender"/>
+		<!--<appender-ref ref="bcgAlarmAppender"/>-->
+	</category>	
+</log4j:configuration>

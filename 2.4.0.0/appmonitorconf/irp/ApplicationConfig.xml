@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="VersionFormat" class="java.lang.String" >
+	<!-- Version 0000 means undefined -->
+		<constructor-arg type="java.lang.String"><value>0000</value></constructor-arg>
+	</bean>
+	<bean id="PersistingBeanMap" class="java.util.HashMap" >
+		<constructor-arg>
+			<map>
+				<entry key="AppMonitor Settings:ConfiguredEvents=Events">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigEventsBean">
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:Settings=Event Log Settings,Module=Default">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigEventBean">
+						<property name="groupEventsBy" value="%ModuleId"/>
+						<property name="eventCurrentPegCountInterval" value="30 minutes"/>
+						<property name="eventLogFileSeparator" value=":"/>
+						<property name="eventAnalyzeInterval" value="1 minutes"/>
+						<property name="eventDefaultSeverity" value="INFO"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="eventLogFileName" value="log/ETL/%AppId-%MachineId.txt"/>
+						<property name="eventLayout" value="net.bcgi.common.jmon.monitor.ETLFileLegacyLayout"/>
+						<property name="eventLogFileInterval" value="30 minutes"/>
+						<property name="eventLogFileWriteTime" value="3"/>
+						<property name="enable" value="true"/>
+						<property name="additivity" value="false"/>
+					</bean>
+				</entry>
+				<entry key="AppMonitor Settings:Settings=Log Settings,Module=Default">
+					<bean class="net.bcgi.common.jmon.monitor.BCGConfigLogBean">
+						<property name="creditCardTransactionTimeLimit" value="-1"/>
+						<property name="logFileInterval" value="30 minutes"/>
+						<property name="transactionTimeLimit" value="-1"/>
+						<property name="logFileMaxSize" value="10485760"/>
+						<property name="flushLineCount" value="0"/>
+						<property name="alarmLevel" value="ERROR"/>
+						<property name="logFileName" value="log/POSGW-[%MachineId].txt"/>
+						<property name="enable" value="true"/>
+						<property name="additivity" value="false"/>
+						<property name="loggingLevel" value="DEBUG"/>
+					</bean>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>
